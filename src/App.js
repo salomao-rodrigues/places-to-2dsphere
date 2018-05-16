@@ -21,7 +21,7 @@ class App extends Component {
           <h1 className="App-title">Google Places to Mongo 2dsphere</h1>
         </header>
 
-        { apiKey && <Map googleMapURL={`${googleMapURL}&=${apiKey}`}/> }
+        { apiKey && <Map googleMapURL={`${googleMapURL}&key=${apiKey}`}/> }
         <label>
           API Key
           <input
