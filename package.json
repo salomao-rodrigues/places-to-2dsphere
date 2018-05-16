@@ -8,7 +8,9 @@
   "dependencies": {
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
-    "react-scripts": "1.1.4"
+    "react-google-maps": "^9.4.5",
+    "react-scripts": "1.1.4",
+    "recompose": "^0.27.0"
   },
   "scripts": {
     "start": "react-scripts start",
