@@ -8,20 +8,24 @@ class App extends Component {
   state = {
     apiKey: null,
     lat: null,
-    long: null
+    long: null,
+    fetching: false
   };
 
   getLocationHandler = () => {
+    this.setState({ fetching: true });
+
     window.navigator.geolocation.getCurrentPosition(
       ({ coords }) => this.setState({
         lat: coords.latitude,
         long: coords.longitude,
+        fetching: false
       })
     );
   };
 
   render() {
-    const { apiKey, lat, long } = this.state;
+    const { apiKey, fetching, lat, long } = this.state;
     return (
       <div className="App">
         <header>
