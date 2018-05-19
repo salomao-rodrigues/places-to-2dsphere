@@ -4,12 +4,13 @@ import { withGoogleMap, withScriptjs, GoogleMap, Marker } from "react-google-map
 
 class Map extends React.Component {
   render() {
+    const { lat, lng } = this.props;
     return <Fragment>
       <GoogleMap
         defaultZoom={8}
-        defaultCenter={{ lat: -34.397, lng: 150.644 }}
+        defaultCenter={{ lat, lng }}
       >
-        <Marker position={{ lat: -34.397, lng: 150.644 }} />
+        <Marker position={{ lat, lng }} />
       </GoogleMap>
     </Fragment>;
   }
