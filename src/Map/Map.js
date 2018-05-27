@@ -2,19 +2,30 @@ import React, { Fragment } from "react";
 import { compose, withProps } from "recompose";
 import { withGoogleMap, withScriptjs, GoogleMap, Marker } from "react-google-maps";
 
-class Map extends React.Component {
-  render() {
-    const { lat, lng } = this.props;
-    return <Fragment>
-      <GoogleMap
-        defaultZoom={8}
-        defaultCenter={{ lat, lng }}
-      >
-        <Marker position={{ lat, lng }} />
-      </GoogleMap>
-    </Fragment>;
-  }
-}
+const Map = ({ lat, lng, locations }) => (
+  <Fragment>
+    <GoogleMap
+      defaultZoom={15}
+      defaultCenter={{ lat, lng }}
+    >
+      <Marker position={{ lat, lng }} />
+      { locations.map((marker, index) => {
+        const { name, icon, loc: { coordinates } } = marker.obj;
+        return (
+          <Marker
+            key={ index }
+            name={ name }
+            icon={{
+              url: icon,
+              scaledSize: new window.google.maps.Size(22, 22)
+            }}
+            position={{ lat: coordinates[0], lng: coordinates[1] }}
+          />
+        );
+      })}
+    </GoogleMap>
+  </Fragment>
+);
 
 export default compose(
   withProps({

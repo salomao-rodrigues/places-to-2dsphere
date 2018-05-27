@@ -8,8 +8,10 @@ class App extends Component {
   state = {
     apiKey: null,
     lat: null,
-    long: null,
-    fetching: false
+    lng: null,
+    userRadius: 3000,
+    fetching: false,
+    locations: null
   };
 
   getLocationHandler = () => {
@@ -18,34 +20,73 @@ class App extends Component {
     window.navigator.geolocation.getCurrentPosition(
       ({ coords }) => this.setState({
         lat: coords.latitude,
-        long: coords.longitude,
+        lng: coords.longitude,
         fetching: false
       })
     );
   };
 
+  getPlaces = () => {
+    let locations;
+    this.setState({ fetching: true });
+    fetch("http://localhost:3001/places", {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      qs: {
+        apiKey: this.state.apiKey,
+        latitude: this.state.lat,
+        longitude: this.state.lng,
+        userRadius: this.state.userRadius
+      }
+    }).then(response => response.json())
+      .then(locations => this.setState({ locations }))
+      .catch(console.error);
+  };
+
   render() {
-    const { apiKey, fetching, lat, long } = this.state;
+    const { apiKey, userRadius, fetching, lat, lng, locations } = this.state;
+    const getPlacesDisabled = fetching || !apiKey || !userRadius || !lat || !lng;
     return (
-      <div className="App">
-        <header>
-          <h1>Google Places to Mongo 2dsphere</h1>
-        </header>
-        <label>
-          API Key
-          <input
-            type="text"
-            onChange={ ({ target }) => this.setState({ apiKey: target.value }) }
-            name="apikey" value={ apiKey || ""}/>
-        </label>
+      <div className="container-fluid">
+        
+          <h1>Google Places to Mongo 2DSphere</h1>
+        <div>
+          <label>
+            API Key
+            <input
+              type="text"
+              onChange={ ({ target }) => this.setState({ apiKey: target.value }) }
+              name="apiKey" value={ apiKey || "" }/> 
+          </label>
+        </div>
+        <div>
+          <label>
+            Scan Radius
+            <input
+              type="text"
+              onChange={ ({ target }) => this.setState({ userRadius: Number(target.value) }) }
+              name="userRadius" value={ userRadius || "" }/> 
+          </label>
+        </div>
         <h2>Use current location</h2>
         <div><b>Latitude</b>: { lat || 'not set' }</div>
-        <div><b>Longitude</b>: { long || 'not set'}</div>
-        <button onClick={ this.getLocationHandler }>Get location</button>
-        { apiKey && lat && long && <Map
+        <div><b>Longitude</b>: { lng || 'not set'}</div>
+        <button disabled={ fetching } onClick={ !fetching ? this.getLocationHandler : null }>Get location</button>
+        <div>Get places around me
+          <button
+            onClick={ !getPlacesDisabled ? this.getPlaces : null }
+            disabled={ getPlacesDisabled }>
+            Ask server
+          </button>
+        </div>
+        { apiKey && lat && lng && <Map
             googleMapURL={`${googleMapURL}&key=${apiKey}`}
             lat={ lat }
-            lng={ long }
+            lng={ lng }
+            locations={ locations }
           />
         }
       </div>
