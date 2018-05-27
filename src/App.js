@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Map from "./Map";
 
-import './App.css';
 const googleMapURL = "https://maps.googleapis.com/maps/api/js?&v=3.exp&libraries=geometry,drawing,places";
 
 class App extends Component {
