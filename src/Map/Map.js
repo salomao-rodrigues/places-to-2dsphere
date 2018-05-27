@@ -5,7 +5,7 @@ import { withGoogleMap, withScriptjs, GoogleMap, Marker } from "react-google-map
 const Map = ({ lat, lng, locations }) => (
   <Fragment>
     <GoogleMap
-      defaultZoom={15}
+      defaultZoom={ 15 }
       defaultCenter={{ lat, lng }}
     >
       <Marker position={{ lat, lng }} />
