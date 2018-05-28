@@ -2,14 +2,12 @@ import React, { Fragment } from "react";
 import { compose } from "recompose";
 import { withGoogleMap, withScriptjs, GoogleMap, Marker } from "react-google-maps";
 
-const Map = ({ lat, lng, locations }) => (
+const Map = ({ lat, lng, locations, setLocation }) => (
   <Fragment>
     <GoogleMap
       defaultZoom={ 15 }
-      center={{ lat, lng }}
-      onClick={ (data) => {
-        console.log(data);
-      }}
+      defaultCenter={{ lat, lng }}
+      onClick={ ({ latLng }) => setLocation(latLng.lat(), latLng.lng()) }
     >
       <Marker position={{ lat, lng }} />
       { locations.map(({ obj: { name, icon, loc: { coordinates }}}, index) => (

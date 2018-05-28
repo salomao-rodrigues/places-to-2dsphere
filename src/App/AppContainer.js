@@ -1,10 +1,11 @@
-import React from 'react';
+import React from "react";
 import debounce from "lodash/debounce";
 import qs from "qs";
 import App from "./App";
 
 const defaultState = {
   apiKey: null,
+  host: null,
   lat: null,
   lng: null,
   userRadius: 3000,
@@ -45,17 +46,17 @@ class AppContainer extends React.Component {
   };
 
   getPlaces = () => {
-    const { apiKey, lat, lng, userRadius } = this.state;
+    const { apiKey, host, lat, lng, userRadius } = this.state;
     let locations;
 
     this.setState({ fetching: true });
     const queryString = qs.stringify({ apiKey, lat, lng, userRadius });
   
-    fetch(`http://localhost:3001/places?${queryString}`, {
-      method: 'GET',
+    fetch(`${host.replace(/\/$/, "")}/places?${queryString}`, {
+      method: "GET",
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        "Accept": "application/json",
+        "Content-Type": "application/json"
       }
     }).then(response => response.json())
       .then(results => locations = !results.error ? results : [])
@@ -66,13 +67,37 @@ class AppContainer extends React.Component {
       ));
   };
 
+  setLocation = (lat, lng) => {
+    this.setState({ lat, lng });
+  };
+
+  deleteAllPlaces = () => {
+    if (!window.confirm("This will erase all data from DB.")) {
+      return;
+    }
+
+    fetch(`${this.state.host.replace(/\/$/, "")}/places`, {
+      method: "DELETE",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      }
+    }).then(() => this.setState({ locations: [] }))
+      .catch(console.error);
+  }
+
   render() {
-    const { fetching } = this.state;
+    const { fetching, apiKey, userRadius, lat, lng } = this.state;
+    const actionsDisabled = fetching || !apiKey || !userRadius || !lat || !lng;
+
     return <App
       { ...this.state }
+      actionsDisabled={ actionsDisabled }
       getPlaces={ this.getPlaces }
       getLocationHandler={ !fetching ? this.getLocationHandler : null }
+      setLocation={ this.setLocation }
       updateFormValue={ this.updateFormValue }
+      deleteAllPlaces={ this.deleteAllPlaces }
     />
   }
 }
