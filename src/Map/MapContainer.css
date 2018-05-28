@@ -1,0 +1,8 @@
+.map-placeholder {
+  background-color: rgb(229, 227, 223);
+  display: flex;
+  font-size: 1.5rem;
+  height: 400px;
+  align-items: center;
+  justify-content: space-around;
+}
