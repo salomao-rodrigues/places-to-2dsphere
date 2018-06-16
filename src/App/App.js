@@ -104,7 +104,7 @@ const App = ({
               id="apiKey"
               className="uk-input"
               placeholder="Google Places API Key"
-              type="text"
+              type="password"
               onChange={ ({ target }) => updateFormValue("apiKey", target.value) }
               value={ apiKey || "" }
             />

@@ -82,8 +82,10 @@ class AppContainer extends React.Component {
         "Accept": "application/json",
         "Content-Type": "application/json"
       }
-    }).then(() => this.setState({ locations: [] }))
-      .catch(console.error);
+    }).then(() => this.setState(
+      { locations: [] },
+      this.persistState()
+    )).catch(console.error);
   }
 
   render() {
