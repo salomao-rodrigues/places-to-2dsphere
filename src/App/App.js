@@ -136,7 +136,7 @@ const App = ({
         </div>
         <div className="uk-margin">
           <p>Last scan status: { newScan ? "Scanned Google API": "Data retrieved from previous scanned location."}</p>
-          <p>{ scanned.length > 0 ? `Closest scanned location: ${ scanned[0].dis.toFixed(2) } meters` : null }</p>
+          <p>{ scanned && scanned.length > 0 ? `Closest scanned location: ${ scanned[0].dis.toFixed(2) } meters` : null }</p>
         </div>
       </fieldset>
     </div>
