@@ -50,6 +50,7 @@ class AppContainer extends React.Component {
     const { apiKey, host, lat, lng, userRadius } = this.state;
     let locations;
     let scanned;
+    let newScan;
 
     this.setState({ fetching: true });
     const queryString = qs.stringify({ apiKey, lat, lng, userRadius });
@@ -61,14 +62,16 @@ class AppContainer extends React.Component {
         "Content-Type": "application/json"
       }
     }).then(response => response.json())
-      .then(({ results, scannedAreas, error }) => {
+      .then(({ results, scannedApi, scannedAreas, error }) => {
         locations = !error ? results : []
         scanned = scannedAreas;
+        newScan = scannedApi;
       })
       .catch(console.error)
       .finally(() => this.setState({
         locations,
         scanned,
+        newScan,
         fetching: false
       },this.persistState()));
   };

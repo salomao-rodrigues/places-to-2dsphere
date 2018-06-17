@@ -5,7 +5,7 @@ import { withGoogleMap, withScriptjs, Circle, GoogleMap, Marker } from "react-go
 const Map = ({ lat, lng, locations, scanned, setLocation, radius }) => (
   <Fragment>
     <GoogleMap
-      defaultZoom={ 15 }
+      defaultZoom={ 11 }
       defaultCenter={{ lat, lng }}
       onClick={ ({ latLng }) => setLocation(latLng.lat(), latLng.lng()) }
     >

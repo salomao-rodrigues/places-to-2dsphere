@@ -12,6 +12,7 @@ const App = ({
   lng,
   locations,
   scanned,
+  newScan,
   getPlaces,
   deleteAllPlaces,
   getLocationHandler,
@@ -126,14 +127,16 @@ const App = ({
           </div>
         </div>
         <div className="uk-margin">
-          <div className="">
-            <button
-              className="uk-button uk-button-danger"
-              onClick={ !actionsDisabled ? deleteAllPlaces : null }
-              disabled={ actionsDisabled }>
-              DELETE ALL DATA
-            </button>
-          </div>
+          <button
+            className="uk-button uk-button-danger"
+            onClick={ !actionsDisabled ? deleteAllPlaces : null }
+            disabled={ actionsDisabled }>
+            DELETE ALL DATA
+          </button>
+        </div>
+        <div className="uk-margin">
+          <p>Last scan status: { newScan ? "Scanned Google API": "Data retrieved from previous scanned location."}</p>
+          <p>{ scanned.length > 0 ? `Closest scanned location: ${ scanned[0].dis.toFixed(2) } meters` : null }</p>
         </div>
       </fieldset>
     </div>
