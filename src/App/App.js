@@ -25,6 +25,7 @@ const App = ({
         lng={ lng }
         locations={ locations || [] }
         setLocation={ setLocation }
+        radius={ userRadius }
       />
     }
     <div className="uk-container">

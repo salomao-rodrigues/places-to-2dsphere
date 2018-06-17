@@ -10,18 +10,14 @@ const mapElements = {
   mapElement: <div style={{ height: `100%` }} />,
 };
 
-class MapContainer extends React.Component {
-  render() {
-    const { apiKey, lat, lng } = this.props;
-
-    return apiKey && lat && lng
-      ? <Map
-          googleMapURL={`${googleMapURL}&key=${apiKey}`}
-          { ...this.props }
-          { ...mapElements }
-        />
-      : <div className="map-placeholder">Please add config values to load map</div>
-  }
-}
+const MapContainer = (props) => (
+  props.apiKey && props.lat && props.lng
+    ? <Map
+        googleMapURL={`${googleMapURL}&key=${props.apiKey}`}
+        { ...props }
+        { ...mapElements }
+      />
+    : <div className="map-placeholder">Please add config values to load map</div>
+);
 
 export default MapContainer;

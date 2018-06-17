@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
 import { compose } from "recompose";
-import { withGoogleMap, withScriptjs, GoogleMap, Marker } from "react-google-maps";
+import { withGoogleMap, withScriptjs, Circle, GoogleMap, Marker } from "react-google-maps";
 
-const Map = ({ lat, lng, locations, setLocation }) => (
+const Map = ({ lat, lng, locations, setLocation, radius }) => (
   <Fragment>
     <GoogleMap
       defaultZoom={ 15 }
@@ -21,6 +21,11 @@ const Map = ({ lat, lng, locations, setLocation }) => (
           position={{ lat: coordinates[0], lng: coordinates[1] }}
         />
       ))}
+      <Circle
+        center={{ lat, lng }}
+        radius={ radius }
+        defaultOptions={{ clickable: false }}
+      />
     </GoogleMap>
   </Fragment>
 );
