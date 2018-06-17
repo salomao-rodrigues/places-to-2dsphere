@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { compose } from "recompose";
 import { withGoogleMap, withScriptjs, Circle, GoogleMap, Marker } from "react-google-maps";
 
-const Map = ({ lat, lng, locations, setLocation, radius }) => (
+const Map = ({ lat, lng, locations, scanned, setLocation, radius }) => (
   <Fragment>
     <GoogleMap
       defaultZoom={ 15 }
@@ -24,8 +24,16 @@ const Map = ({ lat, lng, locations, setLocation, radius }) => (
       <Circle
         center={{ lat, lng }}
         radius={ radius }
-        defaultOptions={{ clickable: false }}
+        defaultOptions={{ clickable: false, fillColor: "#FF0000" }}
       />
+      { scanned.map(({ obj: { loc: { coordinates }, radius}}, index) => (
+        <Circle
+          key={ index }
+          center={{ lat: coordinates[0], lng: coordinates[1] }}
+          radius={ radius }
+          defaultOptions={{ clickable: false }}
+        />
+      ))}
     </GoogleMap>
   </Fragment>
 );

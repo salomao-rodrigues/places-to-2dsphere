@@ -11,6 +11,7 @@ const App = ({
   lat,
   lng,
   locations,
+  scanned,
   getPlaces,
   deleteAllPlaces,
   getLocationHandler,
@@ -24,6 +25,7 @@ const App = ({
         lat={ lat }
         lng={ lng }
         locations={ locations || [] }
+        scanned={ scanned || [] }
         setLocation={ setLocation }
         radius={ userRadius }
       />

@@ -47,9 +47,9 @@ class AppContainer extends React.Component {
   };
 
   getPlaces = () => {
-    const { apiKey, host, lat, lng, userRadius, scanned } = this.state;
+    const { apiKey, host, lat, lng, userRadius } = this.state;
     let locations;
-    let newScan = false;
+    let scanned;
 
     this.setState({ fetching: true });
     const queryString = qs.stringify({ apiKey, lat, lng, userRadius });
@@ -61,15 +61,15 @@ class AppContainer extends React.Component {
         "Content-Type": "application/json"
       }
     }).then(response => response.json())
-      .then(({ results, scannedApi, error }) => {
+      .then(({ results, scannedAreas, error }) => {
         locations = !error ? results : []
-        newScan = scannedApi;
+        scanned = scannedAreas;
       })
       .catch(console.error)
       .finally(() => this.setState({
         locations,
-        fetching: false,
-        scanned: newScan ? [ ...scanned, { lat, lng }] : scanned
+        scanned,
+        fetching: false
       },this.persistState()));
   };
 
