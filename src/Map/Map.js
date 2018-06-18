@@ -23,14 +23,14 @@ const Map = ({ lat, lng, locations, scanned, setLocation, radius }) => (
       ))}
       <Circle
         center={{ lat, lng }}
-        radius={ radius }
+        radius={ +radius }
         defaultOptions={{ clickable: false, fillColor: "#FF0000" }}
       />
       { scanned.map(({ obj: { loc: { coordinates }, radius}}, index) => (
         <Circle
           key={ index }
           center={{ lat: coordinates[0], lng: coordinates[1] }}
-          radius={ radius }
+          radius={ +radius }
           defaultOptions={{ clickable: false }}
         />
       ))}
